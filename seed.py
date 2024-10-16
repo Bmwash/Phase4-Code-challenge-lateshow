@@ -1,7 +1,6 @@
 from app import app, db
 from models import Episode, Guest, Appearance
 
-# Sample data to seed the database
 episodes_data = [
     {'date': '2024-01-01', 'number': 1},
     {'date': '2024-01-08', 'number': 2},
@@ -22,25 +21,24 @@ appearances_data = [
 
 def seed_data():
     with app.app_context():
-        # Create tables
+   
         db.create_all()
 
-        # Clear existing data
+    
         Episode.query.delete()
         Guest.query.delete()
         Appearance.query.delete()
 
-        # Seed Episodes
+  
         for episode in episodes_data:
             new_episode = Episode(date=episode['date'], number=episode['number'])
             db.session.add(new_episode)
 
-        # Seed Guests
+  
         for guest in guests_data:
             new_guest = Guest(name=guest['name'], occupation=guest['occupation'])
             db.session.add(new_guest)
 
-        # Seed Appearances
         for appearance in appearances_data:
             episode = Episode.query.filter_by(number=appearance['episode_number']).first()
             guest = Guest.query.filter_by(name=appearance['guest_name']).first()
@@ -48,7 +46,6 @@ def seed_data():
                 new_appearance = Appearance(rating=appearance['rating'], episode_id=episode.id, guest_id=guest.id)
                 db.session.add(new_appearance)
 
-        # Commit the session
         db.session.commit()
         print("Database seeded successfully.")
 

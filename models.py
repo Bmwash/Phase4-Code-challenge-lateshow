@@ -1,10 +1,10 @@
 from flask_sqlalchemy import SQLAlchemy
 from marshmallow import ValidationError
 
-# Initialize the SQLAlchemy object
+
 db = SQLAlchemy()
 
-# Define the Episode model
+
 class Episode(db.Model):
     __tablename__ = 'episodes'
     id = db.Column(db.Integer, primary_key=True)
@@ -20,7 +20,6 @@ class Episode(db.Model):
             "appearances": [appearance.to_dict() for appearance in self.appearances]
         }
 
-# Define the Guest model
 class Guest(db.Model):
     __tablename__ = 'guests'
     id = db.Column(db.Integer, primary_key=True)
@@ -35,7 +34,6 @@ class Guest(db.Model):
             "occupation": self.occupation
         }
 
-# Define the Appearance model
 class Appearance(db.Model):
     __tablename__ = 'appearances'
     id = db.Column(db.Integer, primary_key=True)
@@ -56,7 +54,6 @@ class Appearance(db.Model):
             "guest": self.guest.to_dict(),
         }
 
-    # Validation for rating (1-5)
     @staticmethod
     def validate_rating(value):
         if value < 1 or value > 5:
